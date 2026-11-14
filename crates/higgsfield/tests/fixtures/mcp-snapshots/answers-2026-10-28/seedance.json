@@ -1,0 +1,23 @@
+{
+  "aspect_ratios": ["auto", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"],
+  "description": "Seedance 2.5 text-to-video, multimodal omni-reference generation, video edit, and video extension",
+  "id": "seedance_2_5",
+  "medias": [
+    {"name": "medias", "roles": ["start_image", "end_image", "image_references", "video_references", "audio_references"], "type": "image"}
+  ],
+  "name": "Seedance 2.5",
+  "output_type": "video",
+  "parameters": [
+    {"default": "t2v", "description": "Generation mode: 't2v' for prompt-only generation, 'omni_reference' for image, video, or audio references, 'video_edit' to edit one reference video (billed by that video's duration; 'duration' and 'aspect_ratio' are ignored), or 'video_extension' to extend a reference video ('aspect_ratio' is ignored \u2014 the output follows the extended video).", "name": "mode", "options": ["t2v", "omni_reference", "video_edit", "video_extension"], "required": "optional", "type": "string"},
+    {"default": 5, "description": "Duration in seconds (4-30).", "max": 30, "min": 4, "name": "duration", "required": "optional", "type": "number"},
+    {"default": "720p", "description": "Output resolution: 480p, 720p, or 1080p.", "name": "resolution", "options": ["480p", "720p", "1080p"], "required": "optional", "type": "string"},
+    {"default": true, "description": "Generate audio for the output video.", "name": "generate_audio", "required": "optional", "type": "bool"},
+    {"default": "standard", "description": "'standard' = normal output bitrate; 'high' = higher bitrate output.", "name": "bitrate_mode", "options": ["standard", "high"], "required": "optional", "type": "string"},
+    {"description": "Extension direction; required for mode 'video_extension' and not allowed otherwise.", "name": "extension_mode", "nullable": true, "options": ["backward", "forward"], "required": "optional", "type": "string"},
+    {"default": false, "description": "Generate a 480p draft that can be finalized within seven days.", "name": "draft", "required": "optional", "type": "bool"},
+    {"description": "Completed draft job to finalize at 1080p.", "name": "draft_job_id", "nullable": true, "required": "optional", "type": "string"}
+  ],
+  "provider_name": "Bytedance",
+  "tags": ["text-to-video", "reference", "identity", "audio-reference", "video-reference", "video-edit", "video-extension", "480p", "720p", "1080p"],
+  "unlim": {"available": false, "expires_at": null, "remaining": null}
+}

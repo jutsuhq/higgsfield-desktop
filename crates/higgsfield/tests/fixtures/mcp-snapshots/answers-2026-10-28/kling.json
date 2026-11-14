@@ -1,0 +1,18 @@
+{
+  "aspect_ratios": [],
+  "description": "",
+  "id": "kling3_0_motion_control",
+  "medias": [
+    {"name": "medias", "roles": ["image_references", "video_references"], "type": "image"}
+  ],
+  "name": "Kling 3.0 Motion Control",
+  "output_type": "video",
+  "parameters": [
+    {"default": "std", "description": "Motion control quality mode. 'std' = standard, 'pro' = higher quality.", "name": "mode", "options": ["std", "pro"], "required": "optional", "type": "string"},
+    {"default": "input_image", "description": "Which input provides the background of the output: the reference image or the reference video.", "name": "background_source", "options": ["input_image", "input_video"], "required": "optional", "type": "string"}
+  ],
+  "provider_name": "",
+  "supports_unlim": true,
+  "tags": ["unlim"],
+  "unlim": {"available": false, "expires_at": null, "remaining": null}
+}

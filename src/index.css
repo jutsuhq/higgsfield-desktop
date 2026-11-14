@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@import "./design/tokens.css";
+@import "./design/motion.css";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * State variants. Each also matches a `data-*` attribute, so the design review page (`/design`) can show a hover,
+ * pressed or focused control without a pointer on it.
+ */
+@custom-variant hovered {
+  &:hover:not(:disabled) {
+    @slot;
+  }
+  &[data-hover] {
+    @slot;
+  }
+}
+@custom-variant pressed {
+  &:active:not(:disabled) {
+    @slot;
+  }
+  &[data-pressed] {
+    @slot;
+  }
+}
+@custom-variant focused {
+  &:focus-visible {
+    @slot;
+  }
+  &[data-focus] {
+    @slot;
+  }
+}
+@custom-variant group-hovered {
+  :where(.group):hover & {
+    @slot;
+  }
+  :where(.group)[data-hover] & {
+    @slot;
+  }
+}

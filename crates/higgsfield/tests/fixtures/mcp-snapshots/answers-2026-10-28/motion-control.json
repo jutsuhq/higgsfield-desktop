@@ -1,0 +1,16 @@
+{
+  "aspect_ratios": [],
+  "description": "Transfer motion from a reference video to subjects in reference images",
+  "id": "hf_mult_motion_control",
+  "medias": [
+    {"name": "medias", "roles": ["image_references", "video_references"], "type": "image"}
+  ],
+  "name": "Genjutsu",
+  "output_type": "video",
+  "parameters": [
+    {"default": "720p", "description": "Output resolution: 480p, 720p, or 1080p.", "name": "resolution", "options": ["480p", "720p", "1080p"], "required": "optional", "type": "string"}
+  ],
+  "provider_name": "Higgsfield",
+  "tags": ["motion-control", "image-to-video", "video-reference", "480p", "720p", "1080p"],
+  "unlim": {"available": false, "expires_at": null, "remaining": null}
+}

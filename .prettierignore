@@ -1,0 +1,9 @@
+dist
+target
+src-tauri/gen
+src-tauri/icons
+src/bindings.ts
+pnpm-lock.yaml
+crates/jutsu-core/resources
+AGENTS.md
+ARCHITECTURE.md

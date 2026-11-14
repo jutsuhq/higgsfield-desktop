@@ -1,0 +1,40 @@
+[package]
+name = "higgsfield"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+reqwest.workspace = true
+url.workspace = true
+sha2.workspace = true
+tokio.workspace = true
+tokio-util = { workspace = true, features = ["io"] }
+futures.workspace = true
+async-trait.workspace = true
+rust_decimal.workspace = true
+uuid.workspace = true
+time.workspace = true
+# Not in the workspace dependencies; both are already in the lock file through other crates.
+base64 = "0.22.1"
+getrandom = "0.3.4"
+percent-encoding = "2.3.2"
+
+[dev-dependencies]
+wiremock.workspace = true
+tokio.workspace = true
+tempfile.workspace = true
+# JSON Schema `pattern` checks of the catalog snapshot; already in the lock file through wiremock.
+regex = "1.13.1"
+# The TLS front of the stub hosts, with the test CA and localhost certificate in tests/fixtures/tls.
+rustls = { version = "0.23.46", default-features = false, features = ["aws_lc_rs", "std"] }
+tokio-rustls = { version = "0.26.6", default-features = false, features = ["aws_lc_rs"] }
+
+[lints]
+workspace = true

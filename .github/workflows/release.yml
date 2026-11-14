@@ -1,0 +1,86 @@
+name: Release
+
+# Pushing a tag vX.Y.Z reruns the checks for that commit, then builds the Windows and Linux installers, signs the
+# update bundles with the updater key and attaches them with latest.json to a draft GitHub release. Publishing the
+# draft offers the update to installed copies, which read releases/latest/download/latest.json (the `updater`
+# endpoint in src-tauri/tauri.conf.json), as the Mac app reads its Sparkle appcast.
+#
+# Secrets: TAURI_SIGNING_PRIVATE_KEY (the private key whose public half is `plugins.updater.pubkey`) and, when that
+# key has one, TAURI_SIGNING_PRIVATE_KEY_PASSWORD.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify-ref:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify the release commit, version and download location
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main ||
+            { echo '::error::Release tags must point to a commit on main'; exit 1; }
+          version=$(sed -nE 's/^version = "([^"]+)"/\1/p' Cargo.toml | head -n 1)
+          [[ "v$version" == "$GITHUB_REF_NAME" ]] ||
+            { echo '::error::The tag does not match the workspace version in Cargo.toml'; exit 1; }
+          grep -q "github.com/$GITHUB_REPOSITORY/releases/latest/download/latest.json" src-tauri/tauri.conf.json ||
+            { echo '::error::The updater endpoint does not point to this release repository'; exit 1; }
+
+  checks:
+    needs: verify-ref
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    needs: checks
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Linux build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev libssl-dev \
+            libclang-dev cmake patchelf rpm
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
+        with:
+          toolchain: stable
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 10
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Fetch ffmpeg for the bundle
+        run: node scripts/fetch-ffmpeg.mjs
+      - uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f # action-v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Jutsu Studio ${{ github.ref_name }}
+          releaseDraft: true
+          includeUpdaterJson: true
+          args: --config src-tauri/tauri.bundle.conf.json

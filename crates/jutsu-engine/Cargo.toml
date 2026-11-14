@@ -1,0 +1,34 @@
+[package]
+name = "jutsu-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+jutsu-core.workspace = true
+higgsfield.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+futures.workspace = true
+async-trait.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+rust_decimal.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+time.workspace = true
+url.workspace = true
+reqwest.workspace = true
+# Not in the workspace dependencies: the free space of a volume on Windows and Linux, which the downloader checks
+# before it writes a result that can't fit.
+fs4 = { version = "0.13.1", default-features = false, features = ["sync"] }
+
+[dev-dependencies]
+tempfile.workspace = true
+wiremock.workspace = true
+
+[lints]
+workspace = true

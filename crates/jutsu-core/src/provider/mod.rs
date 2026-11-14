@@ -1,0 +1,43 @@
+//! What a connection to Higgsfield offers, and the provider traits the connection crates implement.
+
+mod account_elements;
+mod account_library;
+mod balance;
+mod capabilities;
+mod character_sheets;
+mod generation_history;
+mod generation_provider;
+mod image_provider;
+mod model_constraints_source;
+mod motion_library;
+mod prepared_file;
+mod provider_error;
+mod remote_asset;
+mod remote_inputs;
+mod remote_job;
+mod remote_status;
+mod server_files;
+mod sign_in_error;
+mod virality_scoring;
+mod voice_library;
+
+pub use account_elements::*;
+pub use account_library::*;
+pub use balance::*;
+pub use capabilities::*;
+pub use character_sheets::*;
+pub use generation_history::*;
+pub use generation_provider::*;
+pub use image_provider::*;
+pub use model_constraints_source::*;
+pub use motion_library::*;
+pub use prepared_file::*;
+pub use provider_error::*;
+pub use remote_asset::*;
+pub use remote_inputs::*;
+pub use remote_job::*;
+pub use remote_status::*;
+pub use server_files::*;
+pub use sign_in_error::*;
+pub use virality_scoring::*;
+pub use voice_library::*;

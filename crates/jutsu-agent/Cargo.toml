@@ -1,0 +1,34 @@
+[package]
+name = "jutsu-agent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+interprocess.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+time.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+# The decoding error's field path, which a refusal names ("bad video.source.start").
+serde_path_to_error = "0.1.20"
+# Swift counts and cuts text by Character, an extended grapheme cluster.
+unicode-segmentation = "1.13.3"
+
+[target.'cfg(windows)'.dependencies]
+# The named pipe's security descriptor is given in SDDL, a UTF-16 string.
+widestring = "1.2.1"
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

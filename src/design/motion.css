@@ -1,0 +1,109 @@
+/*
+ * Motion.swift: every animation in the app changes without animating while Reduce Motion is on. Here that is the
+ * `prefers-reduced-motion` rule at the bottom; components only ever animate through transitions and keyframes,
+ * so nothing escapes it. The durations are the ones the Swift views pass to `.motionAnimation`.
+ */
+
+@theme {
+  /* `.easeOut(duration: 0.12)`: hover. */
+  --default-transition-duration: 120ms;
+  --default-transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
+  --ease-out: cubic-bezier(0, 0, 0.58, 1);
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  /* SwiftUI `.snappy`: a spring that settles fast with no bounce. */
+  --ease-snappy: cubic-bezier(0.2, 0.9, 0.3, 1);
+
+  --animate-pulse-dot: pulse-dot 1s var(--ease-in-out) infinite;
+  --animate-fresh-glow: fresh-glow 2.4s var(--ease-out) 0.4s both;
+  --animate-plan-shine: plan-shine 2.6s linear infinite;
+  --animate-toast-in: toast-in 250ms var(--ease-snappy) both;
+  --animate-fade-in: fade-in 150ms var(--ease-out) both;
+  --animate-spin: spin 1s linear infinite;
+  /* `RenderingTile`: the band crosses in 1.8 s, over and over. */
+  --animate-render-sweep: render-sweep 1.8s linear infinite;
+}
+
+/*
+ * `RenderingTile`'s band, 0.6 of the tile wide, moves from one tile width left of the tile to 1.4 widths right
+ * (`offset(x: phase * width)`, phase -1 → 1.4). Percentages are of the band. Without the animation it rests off the
+ * tile, as the Swift tile does with Reduce Motion on.
+ */
+@keyframes render-sweep {
+  from {
+    transform: translateX(calc(-100% / 0.6));
+  }
+  to {
+    transform: translateX(calc(140% / 0.6));
+  }
+}
+
+/* `symbolEffect(.pulse)`: the dot fades out and back. */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* `FreshGlow`: starts lit at 0.6 and fades once. Without the animation it rests at 0. */
+@keyframes fresh-glow {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* `PlanBadge`'s shine: waits 1 s, then sweeps from one width left of the badge to two widths right in 1.6 s. */
+@keyframes plan-shine {
+  0%,
+  38.46% {
+    transform: translateX(calc(-100% / 0.45)) rotate(18deg);
+    animation-timing-function: var(--ease-in-out);
+  }
+  100% {
+    transform: translateX(calc(200% / 0.45)) rotate(18deg);
+  }
+}
+
+/* The toast moves in from the bottom edge and fades in. */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* A progress spinner keeps turning, as the system's `ProgressView` does. */
+  *:not([data-essential-motion]),
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

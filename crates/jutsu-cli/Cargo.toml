@@ -1,0 +1,20 @@
+[package]
+name = "jutsu-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[[bin]]
+name = "jutsu"
+path = "src/main.rs"
+
+[dependencies]
+jutsu-mcp.workspace = true
+jutsu-agent.workspace = true
+tokio.workspace = true
+async-trait.workspace = true
+
+[lints]
+workspace = true

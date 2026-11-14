@@ -1,0 +1,47 @@
+[package]
+name = "jutsu-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+jutsu-agent.workspace = true
+jutsu-core = { workspace = true, features = ["specta"] }
+jutsu-store.workspace = true
+jutsu-providers.workspace = true
+jutsu-engine.workspace = true
+jutsu-media.workspace = true
+higgsfield.workspace = true
+keyring.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+futures.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+specta = { workspace = true, features = ["serde_json"] }
+specta-typescript.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+url.workspace = true
+uuid.workspace = true
+rust_decimal.workspace = true
+reqwest.workspace = true
+axum.workspace = true
+tower-http.workspace = true
+percent-encoding.workspace = true
+time.workspace = true
+trash.workspace = true
+unicode-normalization.workspace = true
+
+[features]
+# whisper.cpp for subtitles made on this computer (`jutsu_media::speech`); src-tauri enables it.
+whisper = ["jutsu-media/whisper"]
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

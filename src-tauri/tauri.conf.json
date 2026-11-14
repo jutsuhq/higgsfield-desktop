@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Jutsu Studio",
+  "identifier": "com.jutsustudio.desktop",
+  "build": {
+    "beforeDevCommand": "node scripts/jutsu-helper.mjs && pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "node scripts/jutsu-helper.mjs && pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Jutsu Studio",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 960,
+        "minHeight": 600,
+        "backgroundColor": "#060607"
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "img-src": "'self' http://127.0.0.1:* https: asset: http://asset.localhost data: blob:",
+        "media-src": "'self' http://127.0.0.1:* https: asset: http://asset.localhost data: blob:",
+        "connect-src": "ipc: http://ipc.localhost",
+        "style-src": "'self' 'unsafe-inline'"
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEZFMUJCRDc5Q0M1M0I4NkEKUldScXVGUE1lYjBiL293VGNPZW40UGZYbmtzSkYwVTRDMHlkMzBkaFFPV2lWZldqdUs0UVlVZk8K",
+      "endpoints": ["https://github.com/jutsuhq/higgsfield-desktop/releases/latest/download/latest.json"]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "createUpdaterArtifacts": true,
+    "targets": ["nsis", "deb", "rpm", "appimage"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "fileAssociations": [
+      { "ext": ["mov"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/quicktime" },
+      { "ext": ["mp4"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/mp4" },
+      { "ext": ["m4v"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/x-m4v" },
+      { "ext": ["avi"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/x-msvideo" },
+      { "ext": ["mkv"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/x-matroska" },
+      { "ext": ["webm"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/webm" },
+      { "ext": ["mpg"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/mpeg" },
+      { "ext": ["mpeg"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/mpeg" },
+      { "ext": ["3gp"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/3gpp" },
+      { "ext": ["mts"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/mp2t" },
+      { "ext": ["m2ts"], "name": "Video", "role": "Viewer", "rank": "Alternate", "mimeType": "video/mp2t" },
+      { "ext": ["jpg"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/jpeg" },
+      { "ext": ["jpeg"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/jpeg" },
+      { "ext": ["png"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/png" },
+      { "ext": ["heic"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/heic" },
+      { "ext": ["heif"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/heif" },
+      { "ext": ["webp"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/webp" },
+      { "ext": ["gif"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/gif" },
+      { "ext": ["tif"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/tiff" },
+      { "ext": ["tiff"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/tiff" },
+      { "ext": ["bmp"], "name": "Image", "role": "Viewer", "rank": "Alternate", "mimeType": "image/bmp" }
+    ]
+  }
+}

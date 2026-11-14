@@ -1,0 +1,280 @@
+/*
+ * Design tokens. Mirrors the macOS app's JutsuStudio/DesignSystem/Theme.swift one to one: same names in
+ * kebab-case, same values. Dark only.
+ *
+ * Color roles: lime `accent` is for everything clickable; the violet `signature` gradient is for the app
+ * doing its trick (brand mark, render progress, the done glow) and never goes on a control.
+ */
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 800;
+  font-display: block;
+  src: url("./fonts/BarlowCondensed-ExtraBold.ttf") format("truetype");
+}
+
+/* `static`: every token is emitted, also the ones only inline styles read (plan tiers, the shine). */
+@theme static {
+  --color-*: initial;
+  --radius-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --tracking-*: initial;
+  --shadow-*: initial;
+
+  /*
+   * The spacing unit is one point, as in SwiftUI: `px-18` is `.padding(.horizontal, 18)`, `h-42` is
+   * `.frame(height: 42)`. The named steps below are `Theme.Spacing`.
+   */
+  --spacing: 1px;
+
+  /* Colors */
+  --color-background: #060607;
+  --color-text: #ffffff;
+  /* Secondary text. 7.3:1 on `background`. */
+  --color-muted: rgb(255 255 255 / 0.6);
+  /* Labels, meta lines and hints. 5.0:1 on `background`. */
+  --color-faint: rgb(255 255 255 / 0.48);
+  --color-stroke: rgb(255 255 255 / 0.09);
+  /* Inset areas: empty states, inputs. */
+  --color-well: rgb(255 255 255 / 0.04);
+  /* Raised surfaces: job rows and onboarding cards. */
+  --color-card: rgb(255 255 255 / 0.06);
+  /* Pills and secondary buttons. */
+  --color-glass: rgb(255 255 255 / 0.08);
+  --color-glass-hover: rgb(255 255 255 / 0.11);
+  --color-glass-pressed: rgb(255 255 255 / 0.14);
+  --color-glass-stroke: rgb(255 255 255 / 0.2);
+  /* The active sidebar row. */
+  --color-selection: rgb(255 255 255 / 0.1);
+  /* Progress tracks. */
+  --color-track: rgb(255 255 255 / 0.08);
+  /* Behind tags drawn on top of video frames. */
+  --color-scrim: rgb(0 0 0 / 0.55);
+  /* Lime, for controls. */
+  --color-accent: #d4ff2a;
+  /* `accent` under SwiftUI's additive `.brightness(0.06)`: the hovered primary button. */
+  --color-accent-hover: #e3ff39;
+  --color-accent-glow: rgb(212 255 42 / 0.28);
+  /* Text and icons on `accent`. 17.1:1. */
+  --color-ink: #0a0a0a;
+  /* The price chip inside a primary button. */
+  --color-ink-wash: rgb(10 10 10 / 0.12);
+  --color-danger: #ff5d5d;
+  --color-warning: #ffb547;
+  --color-info: #8ab4ff;
+  /* Violet, fuchsia, pink. Brand and "magic" moments only. */
+  --color-signature-violet: #8b5cf6;
+  --color-signature-fuchsia: #d946ef;
+  --color-signature-pink: #f472b6;
+  /* The primary button's glow while hovered: `accentGlow` at 1.4×. */
+  --color-accent-glow-hover: rgb(212 255 42 / 0.392);
+  /* The drop zone while lit, and the lime borders of an active filter. */
+  --color-accent-wash: rgb(212 255 42 / 0.06);
+  --color-accent-edge: rgb(212 255 42 / 0.5);
+  --color-accent-drop: rgb(212 255 42 / 0.7);
+  /* An estimated progress fill. */
+  --color-accent-estimate: rgb(212 255 42 / 0.45);
+  /* Behind a toast: `background` at 0.92 over `glass`. */
+  --color-toast: rgb(6 6 7 / 0.92);
+  --color-toast-shadow: rgb(0 0 0 / 0.4);
+
+  /* Plan badges in the account plate (AccountPlateView.swift), left to right. */
+  --color-tier-free-from: rgb(255 255 255 / 0.75);
+  --color-tier-free-to: rgb(255 255 255 / 0.5);
+  --color-tier-free-edge: rgb(255 255 255 / 0.6);
+  --color-tier-starter-from: #9cc2ff;
+  --color-tier-starter-to: #5b8cff;
+  --color-tier-pro-from: #6ef3dc;
+  --color-tier-pro-to: #22c3ee;
+  --color-tier-premium-from: #ffe8a3;
+  --color-tier-premium-mid: #f5b83d;
+  --color-tier-premium-to: #e08a1e;
+  --color-tier-premium-glow: rgb(245 184 61 / 0.14);
+  --color-tier-elite-glow: rgb(217 70 239 / 0.22);
+  --color-tier-elite-stroke: rgb(255 255 255 / 0.35);
+  --color-shine: rgb(255 255 255 / 0.35);
+  --color-shine-elite: rgb(255 255 255 / 0.45);
+  /* `RenderingTile`'s light band and its sparkles. */
+  --color-sweep: rgb(255 255 255 / 0.28);
+  /* The compare divider's glow: `signatureFuchsia` at 0.6. */
+  --color-signature-glow: rgb(217 70 239 / 0.6);
+
+  /* Spacing */
+  --spacing-x-small: 4px;
+  --spacing-small: 8px;
+  --spacing-medium: 12px;
+  --spacing-large: 16px;
+  --spacing-x-large: 24px;
+  /* Page padding. */
+  --spacing-page: 28px;
+  /* Above the page header: puts the title on the same line as the sidebar brand mark. */
+  --spacing-page-top: 12px;
+
+  /* Radius */
+  /* Thumbnails and the brand mark. */
+  --radius-small: 8px;
+  /* Sidebar rows. */
+  --radius-row: 9px;
+  /* Inputs, wells, media in rows. */
+  --radius-field: 12px;
+  --radius-media: 14px;
+  /* Job rows, onboarding and settings cards. */
+  --radius-card: 18px;
+  /* Not in Theme.swift, written in the views: the tooltip and the sidebar toggle (6), the onboarding card icon and the tray panel's cards (10). */
+  --radius-hint: 6px;
+  --radius-tile: 10px;
+  /* The tray panel's result frames (`PanelThumbnail`). */
+  --radius-thumb: 5px;
+  /* The app icon is an opaque full-bleed square; macOS masks it to its rounded square, as this does. */
+  --radius-app-icon: 22.37%;
+
+  /* Type: Barlow Condensed ExtraBold for page titles and other display text; body text is the system font. */
+  --font-display: "Barlow Condensed", system-ui, sans-serif;
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", Ubuntu, Cantarell, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+
+  /* SwiftUI weights: .regular, .medium, .semibold, .bold, .heavy, .black. */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-heavy: 800;
+  --font-weight-black: 900;
+
+  /* The point sizes the Swift views use, by name. Line heights follow the system font's. */
+  /* `MediaTag`, chevrons in filters and the plate. */
+  --text-micro: 9px;
+  --text-micro--line-height: 1.2;
+  /* Plan badge, stepper glyphs, filter toggle icons. */
+  --text-tiny: 10px;
+  --text-tiny--line-height: 1.2;
+  /* `SectionLabel`, the queue badge. */
+  --text-label: 10.5px;
+  --text-label--line-height: 1.2;
+  /* Pills, price chips, tooltips. */
+  --text-caption: 11px;
+  --text-caption--line-height: 1.3;
+  --text-caption-plus: 11.5px;
+  --text-caption-plus--line-height: 1.3;
+  --text-small: 12px;
+  --text-small--line-height: 1.3;
+  /* Segments, filters, toasts, empty-state details. */
+  --text-control: 12.5px;
+  --text-control--line-height: 1.3;
+  /* Body text (the system's 13 pt), secondary buttons, sidebar rows, fields. */
+  --text-body: 13px;
+  --text-body--line-height: 1.3;
+  /* Primary buttons, empty-state titles. */
+  --text-button: 14px;
+  --text-button--line-height: 1.3;
+  --text-icon: 15px;
+  --text-icon--line-height: 1.2;
+  --text-heading: 16px;
+  --text-heading--line-height: 1.25;
+  /* `BrandMark`. */
+  --text-brand: 17px;
+  --text-brand--line-height: 1.1;
+  --text-glyph: 18px;
+  --text-glyph--line-height: 1;
+  /* The account plate's amount: an API key's, then credits. */
+  --text-plate-key: 22px;
+  --text-plate-key--line-height: 1;
+  --text-plate: 30px;
+  --text-plate--line-height: 1;
+  /* Create's "Drop a video". */
+  --text-stage: 34px;
+  --text-stage--line-height: 1;
+  --text-stage-glyph: 36px;
+  --text-stage-glyph--line-height: 1;
+  /* `PageHeader`. */
+  --text-title: 40px;
+  --text-title--line-height: 1;
+  /* Onboarding hero. */
+  --text-hero: 52px;
+  --text-hero--line-height: 1;
+
+  /* SwiftUI `.kerning`. */
+  --tracking-brand: 0.3px;
+  --tracking-tag: 0.6px;
+  --tracking-label: 0.8px;
+  --tracking-hero: 1.4px;
+
+  /*
+   * SwiftUI `.shadow(color:radius:y:)`; CSS blur is twice SwiftUI's radius.
+   */
+  --shadow-accent-glow: 0 8px 28px var(--color-accent-glow);
+  --shadow-accent-glow-hover: 0 8px 36px var(--color-accent-glow-hover);
+  --shadow-toast: 0 6px 32px var(--color-toast-shadow);
+  --shadow-tier-premium: 0 4px 28px var(--color-tier-premium-glow);
+  --shadow-tier-elite: 0 4px 28px var(--color-tier-elite-glow);
+  /* `DividerLine`: `.shadow(color: signatureFuchsia.opacity(0.6), radius: 6)`. */
+  --shadow-signature-glow: 0 0 12px var(--color-signature-glow);
+  /* `AboutView`: the icon's `.shadow(color: .black.opacity(0.35), radius: 12, y: 6)`. */
+  --shadow-about-icon: 0 6px 24px rgb(0 0 0 / 0.35);
+  /* `AboutView`'s name: `.kerning(0.4)`. */
+  --tracking-about: 0.4px;
+}
+
+:root {
+  /* The signature gradient, left to right. Never on a control. */
+  --signature: linear-gradient(
+    to right,
+    var(--color-signature-violet),
+    var(--color-signature-fuchsia),
+    var(--color-signature-pink)
+  );
+  /* The same gradient top to bottom (the compare divider) and from the top-leading corner (a rendering tile). */
+  --signature-vertical: linear-gradient(
+    to bottom,
+    var(--color-signature-violet),
+    var(--color-signature-fuchsia),
+    var(--color-signature-pink)
+  );
+  --signature-diagonal: linear-gradient(
+    to bottom right,
+    var(--color-signature-violet),
+    var(--color-signature-fuchsia),
+    var(--color-signature-pink)
+  );
+  /* `AboutView`'s hero: the signature from the top-leading corner, fading into the page from 45% down. */
+  --about-hero:
+    linear-gradient(to bottom, transparent 45%, var(--color-background) 100%), var(--signature-diagonal);
+  /* `AboutView`'s name: `.shadow(color: .black.opacity(0.35), radius: 4, y: 1)`. */
+  --about-name-shadow: 0 1px 8px rgb(0 0 0 / 0.35);
+  /* `RenderingTile`'s band: clear, light, clear. */
+  --sweep-band: linear-gradient(to right, transparent, var(--color-sweep), transparent);
+  /* `SignatureBackdrop`: soft signature light falling from the top of a page. */
+  --signature-backdrop:
+    radial-gradient(
+      circle 560px at 35% -10%,
+      color-mix(in srgb, var(--color-signature-violet) 22%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      circle 460px at 75% -5%,
+      color-mix(in srgb, var(--color-signature-pink) 12%, transparent),
+      transparent
+    );
+  /* `GlowingAppIcon`: the halo behind the large app icon, from 20% to 110% of the icon's size, in a 2.4× square. */
+  --signature-halo: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, var(--color-signature-fuchsia) 45%, transparent) calc(100% * 0.2 / 1.2),
+    color-mix(in srgb, var(--color-signature-violet) 22%, transparent) calc(100% * 0.65 / 1.2),
+    transparent calc(100% * 1.1 / 1.2)
+  );
+  /* The `FreshGlow` blur. */
+  --glow-blur: 14px;
+  /* The tooltip: `HintWindow`'s gap under the control and margin inside the window, and the bubble's width. */
+  --hint-gap: 6px;
+  --hint-margin: 8px;
+  --hint-max-width: 280px;
+  /* How far the plan's light reaches from the account plate's top corner. */
+  --plate-light-radius: 170px;
+  /* The sidebar column (`navigationSplitViewColumnWidth(min: 228, ideal: 228, max: 320)`). */
+  --sidebar-width: 228px;
+  /* `.frame(minWidth: 960, minHeight: 600)` on the window. */
+  --window-min-width: 960px;
+  --window-min-height: 600px;
+}

@@ -1,0 +1,36 @@
+[package]
+name = "jutsu-providers"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+jutsu-core.workspace = true
+higgsfield.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+async-trait.workspace = true
+futures.workspace = true
+tokio.workspace = true
+url.workspace = true
+uuid.workspace = true
+time.workspace = true
+rust_decimal.workspace = true
+
+[dev-dependencies]
+wiremock.workspace = true
+tokio.workspace = true
+reqwest.workspace = true
+tempfile.workspace = true
+# JSON Schema `pattern` checks of the catalog snapshot; already in the lock file through wiremock.
+regex = "1.13.1"
+# The TLS front of the stub hosts, with the test CA and localhost certificate in tests/fixtures/tls.
+rustls = { version = "0.23.46", default-features = false, features = ["aws_lc_rs", "std"] }
+tokio-rustls = { version = "0.26.6", default-features = false, features = ["aws_lc_rs"] }
+
+[lints]
+workspace = true
