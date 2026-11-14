@@ -101,9 +101,9 @@ fn the_inbox_keeps_the_inputs_of_recent_jobs_and_open_image_requests() {
             record("/tmp/inbox/b/done.png", AgentImageState::Finished),
         ],
     );
-    assert!(kept.contains("/home/me/Movies/rooftop.mov"));
-    assert!(kept.contains("/tmp/inbox/a/open.png"));
-    assert!(!kept.contains("/tmp/inbox/b/done.png"));
+    assert!(kept.contains(crate::testing::native("/home/me/Movies/rooftop.mov").as_str()));
+    assert!(kept.contains(crate::testing::native("/tmp/inbox/a/open.png").as_str()));
+    assert!(!kept.contains(crate::testing::native("/tmp/inbox/b/done.png").as_str()));
 }
 
 /// `capabilities` with `image_models` lists each model as `create_image` takes it, its inputs within the protocol's

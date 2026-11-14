@@ -81,7 +81,8 @@ async fn save_upserts_by_id() {
     assert_eq!(records.len(), 1);
     assert_eq!(records[0].state_kind, "done");
     assert!(records[0].is_terminal);
-    assert_eq!(records[0].output_path.as_deref(), Some("/tmp/out.mp4"));
+    let output = file_url("/tmp/out.mp4").to_file_path().unwrap();
+    assert_eq!(records[0].output_path.as_deref(), output.to_str());
     assert_eq!(records[0].finished_at, Some(at(1_000)));
 }
 

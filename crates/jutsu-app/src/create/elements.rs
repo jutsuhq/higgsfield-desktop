@@ -432,7 +432,13 @@ mod tests {
         let images = [local("a.png"), local("b.png")];
         let saved = model
             .publish(&images, "  Mara  ", |image| {
-                let id = image.file_url.path().trim_start_matches("/tmp/").to_owned();
+                let id = image
+                    .file_url
+                    .path()
+                    .rsplit('/')
+                    .next()
+                    .unwrap_or_default()
+                    .to_owned();
                 let asset = asset(&image, id);
                 async move { Ok(asset) }
             })

@@ -130,9 +130,9 @@ fn the_preview_shows_what_goes_in_and_what_comes_out() {
     assert_eq!(
         shown.references,
         [
-            Some("/refs/0.png".to_owned()),
+            Some(crate::testing::native("/refs/0.png")),
             None,
-            Some("/refs/2.png".to_owned())
+            Some(crate::testing::native("/refs/2.png"))
         ]
     );
     assert_eq!(shown.more_references, 2);

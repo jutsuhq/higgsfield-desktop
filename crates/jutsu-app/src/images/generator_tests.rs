@@ -628,7 +628,8 @@ async fn an_accepted_request_is_followed_again_after_a_relaunch() {
         vec!["Soul 2"]
     );
     assert!(spend.charges().iter().all(|charge| !charge.is_pending));
-    assert_eq!(ImageJobLog::open(Some(folder.path())).records().len(), 0);
+    // The log forgets the request once its images are saved, a moment after the run shows it finished.
+    eventually(|| ImageJobLog::open(Some(folder.path())).records().is_empty()).await;
     assert_eq!(provider.submitted().len(), 1);
 }
 
