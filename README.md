@@ -82,7 +82,7 @@ too, with the differences below.
 **1. Install.** Grab the installer for your system from the
 [latest release](https://github.com/jutsuhq/higgsfield-desktop/releases/latest):
 
-- Windows 10 or 11: `Jutsu Studio_<version>_x64-setup.exe`
+- Windows 10 or 11: `Jutsu.Studio_<version>_x64-setup.exe`
 - Linux: the `.AppImage`, or the `.deb` (Debian, Ubuntu) or `.rpm` (Fedora, openSUSE) package
 
 On Linux the system tray needs an AppIndicator host (built into KDE and most desktops; on GNOME, the AppIndicator
