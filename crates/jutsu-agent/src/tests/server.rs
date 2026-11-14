@@ -85,13 +85,18 @@ impl AgentHandler for Handler {
     }
 }
 
-/// A socket of its own in the temporary folder.
+/// A socket of its own in the temporary folder; on Windows a pipe of its own, its inbox in that folder.
 fn temporary_socket() -> (TempDir, AgentEndpoint) {
     let folder = tempfile::Builder::new()
         .prefix("ja")
         .tempdir()
         .expect("temporary folder");
-    let endpoint = AgentEndpoint::at(folder.path().join(socket::FILE_NAME));
+    let mut endpoint = AgentEndpoint::at(folder.path().join(socket::FILE_NAME));
+    if cfg!(windows) {
+        let unique = folder.path().file_name().expect("folder name").to_string_lossy();
+        endpoint.name = PathBuf::from(format!("{}jutsu-test-{unique}", socket::PIPE_NAMESPACE));
+        endpoint.folder = folder.path().to_path_buf();
+    }
     (folder, endpoint)
 }
 
