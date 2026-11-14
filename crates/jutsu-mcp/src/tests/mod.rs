@@ -2,6 +2,8 @@
 
 mod app_connection;
 mod connection;
+// The fingerprints hold Unix paths.
+#[cfg(unix)]
 mod golden;
 mod library_tools;
 mod on_device_tools;

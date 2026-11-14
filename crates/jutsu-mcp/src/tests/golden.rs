@@ -10,7 +10,6 @@ use std::path::Path;
 
 const FOLDER: &str = "/nonexistent-golden";
 
-#[cfg(unix)]
 #[test]
 fn a_one_input_create_image_keeps_its_fingerprint() {
     let arguments = json!({
@@ -28,7 +27,6 @@ fn a_one_input_create_image_keeps_its_fingerprint() {
     );
 }
 
-#[cfg(unix)]
 #[test]
 fn a_create_video_without_elements_keeps_its_fingerprint() {
     let arguments = json!({

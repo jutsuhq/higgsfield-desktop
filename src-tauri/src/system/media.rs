@@ -1,4 +1,4 @@
-//! The microphone on Linux: WebKitGTK keeps `getUserMedia` off unless `enable-media-stream` is set, and denies a
+//! The microphone on Linux: `WebKitGTK` keeps `getUserMedia` off unless `enable-media-stream` is set, and denies a
 //! permission request nothing answers. Speech recordings need both, for the microphone only.
 
 use tauri::{AppHandle, Manager};
