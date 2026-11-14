@@ -443,12 +443,12 @@ mod tests {
                 Some("/results/active.mp4"),
             ),
         ];
-        let drafts = select(&jobs, 30, &["/results/gone.mp4"]);
+        let drafts = select(&jobs, 30, &[crate::testing::native("/results/gone.mp4").as_str()]);
         assert_eq!(
             drafts,
             [OldDraft {
                 job_id: old.id,
-                file: PathBuf::from("/results/old.mp4"),
+                file: crate::testing::absolute("/results/old.mp4"),
                 bytes: 1_000
             }]
         );

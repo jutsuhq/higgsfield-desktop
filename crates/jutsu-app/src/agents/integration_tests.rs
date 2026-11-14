@@ -8,7 +8,7 @@ use std::time::Duration;
 use futures::StreamExt;
 use futures::stream::BoxStream;
 use jutsu_agent::{
-    AgentAmount, AgentBudgetUnit, AgentClient, AgentCommand, AgentCulling, AgentEndpoint, AgentEnhancement,
+    AgentAmount, AgentBudgetUnit, AgentClient, AgentCommand, AgentCulling, AgentEnhancement,
     AgentExportPreset, AgentExportStatus, AgentImageRequest, AgentRequest, AgentResponse, AgentSheet,
     AgentSubtitlesAction, AgentVerdict, AgentVideoRequest, CapabilitiesCommand, CreateImageCommand,
     CreateVideoCommand, EnhanceCommand, ErrorCode, ExportCommand, JobsCommand, LibraryGetCommand,
@@ -169,7 +169,7 @@ async fn connected_app(folder: &std::path::Path) -> Arc<AppEnvironment> {
 async fn an_agent_quotes_queues_and_follows_a_video_through_the_socket() {
     let folder = tempfile::tempdir().unwrap();
     let environment = connected_app(folder.path()).await;
-    let endpoint = AgentEndpoint::at(folder.path().join("a.sock"));
+    let endpoint = crate::testing::agent_endpoint(folder.path());
     let runtime = AgentRuntime::new(
         environment.clone(),
         Arc::new(NoWindow),
@@ -380,7 +380,7 @@ async fn an_agent_makes_images_and_works_the_library_through_the_socket() {
         ))
         .await
         .unwrap();
-    let endpoint = AgentEndpoint::at(folder.path().join("a.sock"));
+    let endpoint = crate::testing::agent_endpoint(folder.path());
     let runtime = AgentRuntime::new(
         environment.clone(),
         Arc::new(NoWindow),

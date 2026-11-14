@@ -189,7 +189,6 @@ pub fn output_settings(
 #[cfg(test)]
 mod tests {
     use std::collections::HashSet;
-    use std::path::PathBuf;
 
     use super::*;
 
@@ -300,7 +299,10 @@ mod tests {
             Some(ProviderKind::ApiKey),
             Path::new("/home/me"),
         );
-        assert_eq!(PathBuf::from(&settings.folder), PathBuf::from("/media/Renders"));
+        assert_eq!(
+            std::path::PathBuf::from(&settings.folder),
+            std::path::PathBuf::from("/media/Renders")
+        );
         assert!(settings.is_custom_folder);
         assert_eq!(settings.max_concurrency, 3);
         assert_eq!(settings.name_pattern, "{bad}");

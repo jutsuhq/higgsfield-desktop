@@ -296,10 +296,14 @@ fn earlier_files_are_the_other_versions_the_app_keeps() {
     material.current = original;
     material.add_version(elsewhere).unwrap();
     material.add_version(current).unwrap();
-    let files = earlier_files(&material, |path| path.starts_with("/home/me/Movies/Jutsu Studio"));
+    let files = earlier_files(&material, |path| {
+        path.starts_with(crate::testing::absolute("/home/me/Movies/Jutsu Studio"))
+    });
     assert_eq!(
         files,
-        [PathBuf::from("/home/me/Movies/Jutsu Studio/original.mp4")]
+        [crate::testing::absolute(
+            "/home/me/Movies/Jutsu Studio/original.mp4"
+        )]
     );
 }
 

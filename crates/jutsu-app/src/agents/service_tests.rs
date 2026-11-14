@@ -161,10 +161,26 @@ fn a_new_video_answers_its_references_in_order() {
             ))
             .collect::<Vec<_>>(),
         [
-            ("@Image1", Some("Mara"), "/tmp/elements/m1.png"),
-            ("@Image2", Some("Mara"), "/tmp/elements/m2.png"),
-            ("@Image3", Some("Roof"), "/tmp/elements/r1.png"),
-            ("@Image4", None, "/tmp/inbox/1/face.png"),
+            (
+                "@Image1",
+                Some("Mara"),
+                crate::testing::native("/tmp/elements/m1.png").as_str()
+            ),
+            (
+                "@Image2",
+                Some("Mara"),
+                crate::testing::native("/tmp/elements/m2.png").as_str()
+            ),
+            (
+                "@Image3",
+                Some("Roof"),
+                crate::testing::native("/tmp/elements/r1.png").as_str()
+            ),
+            (
+                "@Image4",
+                None,
+                crate::testing::native("/tmp/inbox/1/face.png").as_str()
+            ),
         ]
     );
     assert!(images::references(&[], &[]).is_none());

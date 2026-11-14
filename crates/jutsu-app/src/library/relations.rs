@@ -221,7 +221,7 @@ mod tests {
     }
 
     fn exists(path: &Path) -> bool {
-        path != Path::new(MISSING)
+        path != crate::testing::absolute(MISSING)
     }
 
     #[test]

@@ -305,3 +305,16 @@ pub fn native(path: &str) -> String {
 pub fn file_url(path: impl AsRef<std::path::Path>) -> Url {
     Url::from_file_path(absolute(path)).expect("an absolute path")
 }
+
+/// An agent socket in `folder`; on Windows a pipe of its own, its inbox in the folder.
+pub fn agent_endpoint(folder: &std::path::Path) -> jutsu_agent::AgentEndpoint {
+    let mut endpoint = jutsu_agent::AgentEndpoint::at(folder.join("a.sock"));
+    if cfg!(windows) {
+        let unique = folder.file_name().expect("folder name").to_string_lossy();
+        endpoint.name = std::path::PathBuf::from(format!(
+            "{}jutsu-test-{unique}",
+            jutsu_agent::socket::PIPE_NAMESPACE
+        ));
+    }
+    endpoint
+}
