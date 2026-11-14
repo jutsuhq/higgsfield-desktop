@@ -69,7 +69,6 @@ fn the_inbox_keeps_the_inputs_of_recent_jobs_and_open_image_requests() {
     use super::super::image_record::{AgentImageRecord, AgentImageState};
     use crate::images::form::ImageRequestDraft;
     use jutsu_core::{AgentMoney, AgentMoneyUnit, ImageModel};
-    use url::Url;
 
     let job = crate::library::fixture::item().job;
     let record = |path: &str, state: AgentImageState| {
@@ -87,7 +86,7 @@ fn the_inbox_keeps_the_inputs_of_recent_jobs_and_open_image_requests() {
                 prompt: "A knight".to_owned(),
                 aspect_ratio: "1:1".to_owned(),
                 count: 1,
-                inputs: vec![LocalImage::new(Url::from_file_path(path).unwrap())],
+                inputs: vec![LocalImage::new(crate::testing::file_url(path))],
                 title: None,
             },
             OffsetDateTime::now_utc(),
@@ -140,7 +139,7 @@ fn an_image_model_is_listed_as_create_image_takes_it() {
 /// named, then the inbox files, in order (`AgentService+Video.swift`).
 #[test]
 fn a_new_video_answers_its_references_in_order() {
-    let image = |path: &str| LocalImage::new(url::Url::from_file_path(path).unwrap());
+    let image = |path: &str| LocalImage::new(crate::testing::file_url(path));
     let elements = [
         crate::agents::element_lookup::ElementImages {
             name: "Mara".to_owned(),

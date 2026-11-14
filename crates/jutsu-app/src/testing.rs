@@ -285,3 +285,18 @@ impl GenerationProvider for BalanceProvider {
         (self.answer)().await
     }
 }
+
+/// `path` made absolute on every system: the tests' Unix paths (`/tmp/clip.mp4`) get a drive on Windows.
+pub fn absolute(path: impl AsRef<std::path::Path>) -> std::path::PathBuf {
+    let path = path.as_ref();
+    if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::path::Path::new("C:\\").join(path.strip_prefix("/").unwrap_or(path))
+    }
+}
+
+/// The `file:` URL of `path`, made absolute on every system (`absolute`).
+pub fn file_url(path: impl AsRef<std::path::Path>) -> Url {
+    Url::from_file_path(absolute(path)).expect("an absolute path")
+}

@@ -3,7 +3,6 @@
 
 use jutsu_core::{Cost, Job, JobSpec, Mode, Pricing, ProviderKind, Resolution, VideoModel};
 use rust_decimal::Decimal;
-use url::Url;
 use uuid::Uuid;
 
 use super::follow_up::follow_up;
@@ -139,7 +138,7 @@ fn loading_an_extend_of_a_result_ends_at_the_end_of_the_file() {
         time::OffsetDateTime::UNIX_EPOCH,
     );
     let mut finished = job.clone();
-    finished.output_file = Some(Url::from_file_path("/tmp/result.mp4").unwrap());
+    finished.output_file = Some(crate::testing::file_url("/tmp/result.mp4"));
     let spec = follow_up(&finished, Mode::Extend).unwrap();
     assert_eq!(spec.mode, Mode::Extend);
     assert_eq!(spec.model, VideoModel::SEEDANCE25);

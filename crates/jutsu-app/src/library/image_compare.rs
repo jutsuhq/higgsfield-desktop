@@ -220,7 +220,7 @@ mod tests {
     fn image(id: Uuid, name: &str) -> CompareImage {
         CompareImage {
             id,
-            url: Url::from_file_path(std::env::temp_dir().join(format!("{name}.png"))).unwrap(),
+            url: crate::testing::file_url(std::env::temp_dir().join(format!("{name}.png"))),
             prompt: name.to_owned(),
         }
     }

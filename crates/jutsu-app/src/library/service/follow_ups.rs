@@ -1301,7 +1301,7 @@ mod tests {
         let path = folder.path().join("rooftop.mp4");
         std::fs::write(&path, b"video").unwrap();
         let mut version = MaterialVersion::new(Uuid::new_v4(), crate::library::fixture::now());
-        version.file_url = Some(Url::from_file_path(&path).unwrap());
+        version.file_url = Some(crate::testing::file_url(&path));
         let mut material = Material::new(
             Uuid::new_v4(),
             jutsu_core::MaterialKind::Video,

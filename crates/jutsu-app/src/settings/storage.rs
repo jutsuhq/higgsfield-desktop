@@ -355,7 +355,6 @@ pub async fn clear_cache(layout: &FileLayout) -> Result<(), StorageError> {
 mod tests {
     use jutsu_core::{Cost, FailureReason, JobSpec, JobState, Mode, ProviderKind, Resolution};
     use rust_decimal::Decimal;
-    use url::Url;
 
     use super::*;
 
@@ -389,7 +388,7 @@ mod tests {
         );
         job.state = state;
         job.finished_at = finished_at;
-        job.output_file = file.map(|path| Url::from_file_path(path).unwrap());
+        job.output_file = file.map(crate::testing::file_url);
         job
     }
 
@@ -543,7 +542,7 @@ mod tests {
         let file = root.path().join("draft.mp4");
         std::fs::write(&file, vec![0; 777]).unwrap();
         let mut draft = job(true, JobState::Done, None, ago(40), None);
-        draft.output_file = Some(Url::from_file_path(&file).unwrap());
+        draft.output_file = Some(crate::testing::file_url(&file));
         let drafts = select_old_drafts(&[draft], 30, now(), file_bytes);
         assert_eq!(drafts.iter().map(|draft| draft.bytes).collect::<Vec<_>>(), [777]);
     }

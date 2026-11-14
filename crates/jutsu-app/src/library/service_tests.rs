@@ -534,7 +534,7 @@ async fn image_group(
         let mut material = catalog_image(prompt, Some(group), minutes, Culling::Unreviewed, false);
         let path = folder.path().join(format!("variant {index}.png"));
         std::fs::write(&path, PIXEL_PNG).unwrap();
-        material.current.file_url = Some(url::Url::from_file_path(&path).unwrap());
+        material.current.file_url = Some(crate::testing::file_url(&path));
         here.push(material);
     }
     let missing = catalog_image("Gone", Some(group), 4.0, Culling::Unreviewed, false);
@@ -655,7 +655,7 @@ async fn with_edited_version(
     for path in [&first, &second] {
         std::fs::write(path, PIXEL_PNG).unwrap();
     }
-    material.current.file_url = Some(url::Url::from_file_path(&first).unwrap());
+    material.current.file_url = Some(crate::testing::file_url(&first));
     if let Some(video) = material.current.video.as_mut() {
         video.output_file.clone_from(&material.current.file_url);
     }
@@ -663,7 +663,7 @@ async fn with_edited_version(
     assert_eq!(original.version_id, material.id);
     let mut edited = material.current.clone();
     edited.id = Uuid::new_v4();
-    edited.file_url = Some(url::Url::from_file_path(&second).unwrap());
+    edited.file_url = Some(crate::testing::file_url(&second));
     edited.inputs = vec![jutsu_core::MaterialInput {
         source: original,
         role: jutsu_core::MaterialInputRole::Parent,

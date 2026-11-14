@@ -28,7 +28,7 @@ pub fn dec(text: &str) -> Decimal {
 }
 
 pub fn file(path: &str) -> Url {
-    Url::from_file_path(path).unwrap()
+    crate::testing::file_url(path)
 }
 
 /// The fields `LibraryFixture.item` varies.

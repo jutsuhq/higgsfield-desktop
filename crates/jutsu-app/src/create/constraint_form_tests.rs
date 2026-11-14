@@ -2,7 +2,6 @@
 
 use jutsu_core::{ClosedRange, LocalImage, Mode, ModeLimits, PixelSize, Resolution, VideoModel};
 use time::OffsetDateTime;
-use url::Url;
 
 use super::{ModelConstraintCache, ModelConstraintStore};
 use crate::create::form::{CreateForm, SourceVideo, time_range};
@@ -21,7 +20,7 @@ fn write_fixture(cache: &ModelConstraintCache, entries: &str) {
 
 fn video(duration: f64) -> SourceVideo {
     SourceVideo {
-        file_url: Url::from_file_path("/tmp/clip.mp4").unwrap(),
+        file_url: crate::testing::file_url("/tmp/clip.mp4"),
         duration,
         pixel_size: PixelSize::new(1920, 1080),
         codec: "avc1".to_owned(),
@@ -31,7 +30,7 @@ fn video(duration: f64) -> SourceVideo {
 }
 
 fn image(index: usize) -> LocalImage {
-    LocalImage::new(Url::from_file_path(format!("/tmp/ref{index}.png")).unwrap())
+    LocalImage::new(crate::testing::file_url(format!("/tmp/ref{index}.png")))
 }
 
 fn seedance_form(seconds: f64) -> CreateForm {

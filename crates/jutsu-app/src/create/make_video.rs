@@ -311,14 +311,13 @@ mod tests {
     //! `MakeVideoTests`: the role options, the choices and the placing.
 
     use jutsu_core::{MaterialReference, PixelSize};
-    use url::Url;
     use uuid::Uuid;
 
     use super::*;
     use crate::create::form::SourceVideo;
 
     fn image(name: &str) -> LocalImage {
-        LocalImage::new(Url::from_file_path(format!("/tmp/{name}.png")).unwrap())
+        LocalImage::new(crate::testing::file_url(format!("/tmp/{name}.png")))
     }
 
     fn version() -> MaterialReference {
@@ -343,7 +342,7 @@ mod tests {
 
     fn clip() -> SourceVideo {
         SourceVideo {
-            file_url: Url::from_file_path("/tmp/clip.mp4").unwrap(),
+            file_url: crate::testing::file_url("/tmp/clip.mp4"),
             duration: 14.2,
             pixel_size: PixelSize::new(1920, 1080),
             codec: "avc1".to_owned(),

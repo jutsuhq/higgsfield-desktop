@@ -105,7 +105,7 @@ fn an_image_lists_what_it_edited_and_its_request() {
         input_images: Vec::new(),
     };
     let mut version = MaterialVersion::new(Uuid::new_v4(), now());
-    version.file_url = Some(Url::from_file_path("/tmp/side.png").unwrap());
+    version.file_url = Some(crate::testing::file_url("/tmp/side.png"));
     version.generation = Some(generation(
         &request.prompt,
         "soul",
@@ -141,11 +141,11 @@ fn an_image_lists_what_it_edited_and_its_request() {
 #[test]
 fn a_new_version_names_the_one_it_was_made_from() {
     let mut first = MaterialVersion::new(Uuid::new_v4(), now());
-    first.file_url = Some(Url::from_file_path("/tmp/a.png").unwrap());
+    first.file_url = Some(crate::testing::file_url("/tmp/a.png"));
     let mut image = Material::new(first.id, MaterialKind::Image, now(), first);
     let original = image.reference();
     let mut upscaled = MaterialVersion::new(Uuid::new_v4(), now());
-    upscaled.file_url = Some(Url::from_file_path("/tmp/a 4x.png").unwrap());
+    upscaled.file_url = Some(crate::testing::file_url("/tmp/a 4x.png"));
     upscaled.inputs = vec![MaterialInput {
         source: original,
         role: MaterialInputRole::Parent,

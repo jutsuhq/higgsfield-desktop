@@ -9,7 +9,6 @@ use jutsu_core::{
     ProviderKind, Resolution, SpendCap, VideoModel,
 };
 use rust_decimal::Decimal;
-use url::Url;
 use uuid::Uuid;
 
 use super::context::{CreateContext, EstimateCache, SubmitDecision, price_key};
@@ -19,7 +18,7 @@ use super::view::{MediaState, snapshot};
 
 pub(super) fn video_named(duration: f64, width: i64, height: i64, codec: &str, name: &str) -> SourceVideo {
     SourceVideo {
-        file_url: Url::from_file_path(format!("/tmp/{name}")).unwrap(),
+        file_url: crate::testing::file_url(format!("/tmp/{name}")),
         duration,
         pixel_size: PixelSize::new(width, height),
         codec: codec.to_owned(),
@@ -33,7 +32,7 @@ pub(super) fn video(duration: f64) -> SourceVideo {
 }
 
 pub(super) fn image(index: usize) -> LocalImage {
-    LocalImage::new(Url::from_file_path(format!("/tmp/ref{index}.png")).unwrap())
+    LocalImage::new(crate::testing::file_url(format!("/tmp/ref{index}.png")))
 }
 
 pub(super) fn images(indices: impl IntoIterator<Item = usize>) -> Vec<LocalImage> {
@@ -988,10 +987,10 @@ fn the_draft_round_trips_and_drops_files_that_are_gone() {
     std::fs::write(&picture, b"image").unwrap();
     let mut form = form(Mode::MotionTransfer, Resolution::P720);
     let mut source = video(14.2);
-    source.file_url = Url::from_file_path(&clip).unwrap();
+    source.file_url = crate::testing::file_url(&clip);
     form.set_source(Some(source));
     form.add_references(vec![
-        LocalImage::new(Url::from_file_path(&picture).unwrap()),
+        LocalImage::new(crate::testing::file_url(&picture)),
         image(9),
     ]);
     form.prompt = "Rain".to_owned();

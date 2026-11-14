@@ -84,7 +84,7 @@ fn images() -> Vec<LocalImage> {
     fields()
         .images
         .iter()
-        .map(|path| LocalImage::new(Url::from_file_path(path).unwrap()))
+        .map(|path| LocalImage::new(crate::testing::file_url(path)))
         .collect()
 }
 

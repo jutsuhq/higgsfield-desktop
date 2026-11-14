@@ -7,7 +7,6 @@ use jutsu_core::{
     AspectRatio, AudioOption, Capabilities, CharacterOrientation, CostUnit, LocalImage, Mode, ModelParameter,
     ProviderKind, Resolution, SeedanceBitrate, VideoModel,
 };
-use url::Url;
 use uuid::Uuid;
 
 use super::context::CreateContext;
@@ -53,7 +52,7 @@ fn seedance_without_source() -> CreateForm {
 }
 
 fn frame(name: &str) -> LocalImage {
-    LocalImage::new(Url::from_file_path(format!("/tmp/{name}.png")).unwrap())
+    LocalImage::new(crate::testing::file_url(format!("/tmp/{name}.png")))
 }
 
 fn first_spec(form: &CreateForm) -> jutsu_core::JobSpec {

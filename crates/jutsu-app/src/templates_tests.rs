@@ -95,7 +95,7 @@ impl TemplateStore for FakeRecords {
                     .next_back()
                     .unwrap()
                     .to_owned();
-                Url::from_file_path(format!("/templates/{id}/{name}")).unwrap()
+                crate::testing::file_url(format!("/templates/{id}/{name}"))
             })
             .collect())
     }
@@ -105,7 +105,7 @@ impl TemplateStore for FakeRecords {
 }
 
 fn file(path: &str) -> Url {
-    Url::from_file_path(path).unwrap()
+    crate::testing::file_url(path)
 }
 
 fn draft(name: &str) -> JobTemplate {
