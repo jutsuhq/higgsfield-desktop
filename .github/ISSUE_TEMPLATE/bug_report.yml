@@ -1,0 +1,64 @@
+name: Bug report
+description: Something in Jutsu Studio doesn't work as it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Never paste an API key, a sign-in token or a signed result URL here. Security problems go to [private vulnerability reporting](https://github.com/jutsuhq/higgsfield-desktop/security/advisories/new) instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Drop a 10 s MP4 on Create
+        2. Choose Restyle › Film Noir
+        3. Click Draft 480p
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Jutsu Studio version
+      description: Settings › General, or the About window.
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: System
+      description: Windows version, or the Linux distribution, desktop and package you installed.
+      placeholder: Windows 11 24H2 / Ubuntu 24.04, GNOME, .deb
+    validations:
+      required: true
+  - type: dropdown
+    id: connection
+    attributes:
+      label: Connection
+      options:
+        - Higgsfield account
+        - API key
+        - Not connected
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Mode and model
+      description: If it's about a job.
+      placeholder: Motion transfer on Seedance 2.5
+  - type: textarea
+    id: logs
+    attributes:
+      label: Request ID or logs
+      description: |
+        A failed job's IDs (Queue › Copy IDs), or lines from `jutsu-studio.log` in the app's `logs` folder: `%LOCALAPPDATA%\com.jutsustudio.desktop\logs` on Windows, `~/.local/share/com.jutsustudio.desktop/logs` on Linux. Check them for anything private first.
+      render: text

@@ -2,7 +2,7 @@
 
 <img src="src-tauri/icons/128x128@2x.png" width="128" height="128" alt="Jutsu Studio icon">
 
-# Jutsu Studio for Windows and Linux
+# Higgsfield Desktop App for Windows and Linux (Jutsu Studio)
 
 **The open-source Higgsfield desktop app for Windows and Linux. Unofficial.**
 Make video and images with Genjutsu, Seedance, Kling and Higgsfield's other models in a desktop studio, and keep
@@ -133,7 +133,7 @@ pnpm bundle       # fetch ffmpeg and build the installers
 
 ## Contributing
 
-Issues and PRs are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first, and keep the app's principles:
+Issues and PRs are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md) first, and keep the app's principles:
 bring-your-own-account, local-first, never surprise with cost.
 
 ## Disclaimer
