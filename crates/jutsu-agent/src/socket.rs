@@ -178,9 +178,13 @@ pub(crate) fn pipe_safe(user: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{AgentEndpoint, FILE_NAME, MAX_PATH_LENGTH, pipe_safe};
+    use super::pipe_safe;
+    #[cfg(unix)]
+    use super::{AgentEndpoint, FILE_NAME, MAX_PATH_LENGTH};
+    #[cfg(unix)]
     use std::{collections::HashMap, ffi::OsString, path::PathBuf};
 
+    #[cfg(unix)]
     fn endpoint(variables: &[(&str, &str)]) -> Option<AgentEndpoint> {
         let variables: HashMap<String, OsString> = variables
             .iter()
