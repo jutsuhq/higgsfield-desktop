@@ -144,7 +144,7 @@ fn the_preview_shows_what_goes_in_and_what_comes_out() {
     assert_eq!(
         preview(&done).result,
         ResultTile::Done {
-            path: Some("/out/result.mp4".to_owned())
+            path: Some(crate::testing::native("/out/result.mp4"))
         }
     );
     assert_eq!(
