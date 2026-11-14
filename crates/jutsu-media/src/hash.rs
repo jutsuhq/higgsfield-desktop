@@ -360,6 +360,9 @@ mod tests {
         assert_eq!(hasher.reads.get(), 2);
     }
 
+    // Unix only: on Windows the file id is the creation time, which file system tunneling hands from a deleted file
+    // to one renamed into its place within seconds.
+    #[cfg(unix)]
     #[test]
     fn a_replaced_file_is_read_again_when_size_and_date_match() {
         let folder = dir();

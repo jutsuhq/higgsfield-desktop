@@ -173,6 +173,8 @@ mod tests {
         let folder = tempfile::tempdir().expect("folder");
         let real = super::follow_symlinks(folder.path());
         assert_eq!(Inbox::resolve("x/../y.png", folder.path()), real.join("y.png"));
+        // Absolute on Unix only: Windows puts the current drive before it.
+        #[cfg(unix)]
         assert_eq!(
             Inbox::resolve("/nonexistent-golden/a.png", folder.path()),
             Path::new("/nonexistent-golden/a.png")

@@ -140,6 +140,8 @@ mod tests {
         history
     }
 
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn items_in_folder_a_stay_readable_after_switching_to_folder_b() {
         let result = Path::new(FOLDER_A).join("2026-10-14_restyle_1a2b3c4d.mp4");
@@ -151,6 +153,8 @@ mod tests {
         assert_eq!(history.folders(), ["/Volumes/Drive/Renders A"]);
     }
 
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn folders_no_result_uses_are_dropped() {
         let mut history = history(&[FOLDER_A, FOLDER_B]);
@@ -163,6 +167,8 @@ mod tests {
         assert_eq!(history.folders(), ["/home/me/Renders B"]);
     }
 
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn a_folder_added_after_the_jobs_were_read_is_not_dropped() {
         let mut history = history(&[FOLDER_A]);
@@ -182,6 +188,8 @@ mod tests {
         assert_eq!(history.stored(), None);
     }
 
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn folder_keys_drop_dots_and_the_trailing_separator() {
         assert_eq!(folder_key(Path::new("/a/./b/../c/")), "/a/c");

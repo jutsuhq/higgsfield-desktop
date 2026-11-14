@@ -7,7 +7,6 @@ use jutsu_core::{
     AgentMoney, AgentMoneyUnit, AgentOrigin, Cost, FailureReason, GenerationTimes, Job, JobState, PauseReason,
 };
 use rust_decimal::Decimal;
-use url::Url;
 use uuid::Uuid;
 
 use super::*;
@@ -364,7 +363,7 @@ fn recent_results_are_the_last_done_jobs() {
                 ..JobFixture::default()
             }
             .job(JobState::Done);
-            job.output_file = Some(Url::parse(&format!("file:///tmp/result-{minutes}.mp4")).unwrap());
+            job.output_file = Some(crate::testing::file_url(format!("/tmp/result-{minutes}.mp4")));
             job
         })
         .collect();

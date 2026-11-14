@@ -6,7 +6,6 @@ use jutsu_core::{
 };
 use rust_decimal::Decimal;
 use time::Duration;
-use url::Url;
 
 use super::*;
 use crate::queue::fixture::{JobFixture, TWO_MINUTES, job, now, timed, usd};
@@ -95,14 +94,14 @@ fn running_states_offer_cancel() {
 
 #[test]
 fn the_row_file_is_the_finished_video() {
-    let output = Url::parse("file:///Movies/out.mp4").unwrap();
+    let output = crate::testing::file_url("/Movies/out.mp4");
     let mut done = job(JobState::Done);
     done.output_file = Some(output.clone());
     let mut failed = job(message("x"));
     failed.output_file = Some(output);
     assert_eq!(
         JobRowModel::new(&done, now(), None).file(),
-        Some("/Movies/out.mp4")
+        Some(crate::testing::native("/Movies/out.mp4").as_str())
     );
     assert_eq!(row(JobState::Done).file(), None);
     assert_eq!(JobRowModel::new(&failed, now(), None).file(), None);
@@ -111,12 +110,12 @@ fn the_row_file_is_the_finished_video() {
 #[test]
 fn terminal_and_paused_actions() {
     let mut done = job(JobState::Done);
-    done.output_file = Some(Url::parse("file:///Movies/out.mp4").unwrap());
+    done.output_file = Some(crate::testing::file_url("/Movies/out.mp4"));
     assert_eq!(
         JobRowModel::new(&done, now(), None).actions,
         [
             RowAction::ShowInFolder {
-                path: "/Movies/out.mp4".to_owned()
+                path: crate::testing::native("/Movies/out.mp4")
             },
             RowAction::OpenInLibrary
         ]

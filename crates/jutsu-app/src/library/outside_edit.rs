@@ -109,7 +109,7 @@ mod tests {
 
     fn material(path: &Path) -> Material {
         let mut version = MaterialVersion::new(Uuid::new_v4(), now());
-        version.file_url = Url::from_file_path(path).ok();
+        version.file_url = Url::from_file_path(crate::testing::absolute(path)).ok();
         Material::new(Uuid::new_v4(), MaterialKind::Image, now(), version)
     }
 
@@ -142,9 +142,9 @@ mod tests {
     /// `OutsideEditTests.aFileFromElsewhereIsAnEditOfTheCurrentVersion`.
     #[test]
     fn a_file_from_elsewhere_is_an_edit_of_the_current_version() {
-        let material = material(Path::new("/library/hero.png"));
-        let other = self::material(Path::new("/library/other.png"));
-        let root = Path::new("/tmp/Edit In");
+        let material = material(&crate::testing::absolute("/library/hero.png"));
+        let other = self::material(&crate::testing::absolute("/library/other.png"));
+        let root = &crate::testing::absolute("/tmp/Edit In");
         let reference = other.reference();
         let foreign_copy = root
             .join(format!(
@@ -155,13 +155,23 @@ mod tests {
             .join("other.png");
 
         assert_eq!(
-            parent(Path::new("/home/me/Desktop/hero.png"), &material, root),
+            parent(
+                &crate::testing::absolute("/home/me/Desktop/hero.png"),
+                &material,
+                root
+            ),
             material.reference()
         );
         assert_eq!(parent(&foreign_copy, &material, root), material.reference());
         assert_eq!(source(&foreign_copy, root), Some(other.reference()));
-        assert!(is_own_file(Path::new("/library/hero.png"), &material));
-        assert!(!is_own_file(Path::new("/library/other.png"), &material));
+        assert!(is_own_file(
+            &crate::testing::absolute("/library/hero.png"),
+            &material
+        ));
+        assert!(!is_own_file(
+            &crate::testing::absolute("/library/other.png"),
+            &material
+        ));
     }
 
     /// `OutsideEditTests.theEditIsCopiedBackUnderAFreeName`.

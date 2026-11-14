@@ -320,7 +320,7 @@ mod tests {
     }
 
     fn local(name: &str) -> LocalImage {
-        LocalImage::new(Url::parse(&format!("file:///tmp/{name}")).unwrap())
+        LocalImage::new(crate::testing::file_url(format!("/tmp/{name}")))
     }
 
     fn asset(image: &LocalImage, id: String) -> RemoteAsset {

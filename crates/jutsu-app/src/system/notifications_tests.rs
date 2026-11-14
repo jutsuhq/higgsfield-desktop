@@ -4,7 +4,6 @@ use std::collections::HashMap;
 
 use jutsu_core::{FailureReason, Job, JobState, PauseReason};
 use time::Duration;
-use url::Url;
 use uuid::Uuid;
 
 use super::*;
@@ -142,7 +141,7 @@ fn a_done_job_says_how_long_it_generated() {
 #[test]
 fn only_a_video_ready_carries_the_result_file() {
     let mut running = processing();
-    running.output_file = Some(Url::parse("file:///tmp/dance.mp4").unwrap());
+    running.output_file = Some(crate::testing::file_url("/tmp/dance.mp4"));
     let done = changes(std::slice::from_ref(&running), &[moved(&running, JobState::Done)]);
     assert!(
         done[0]
@@ -161,7 +160,7 @@ fn only_a_video_ready_carries_the_result_file() {
 #[test]
 fn the_buttons_follow_the_result_and_the_retry() {
     let mut draft = processing();
-    draft.output_file = Some(Url::parse("file:///tmp/dance.mp4").unwrap());
+    draft.output_file = Some(crate::testing::file_url("/tmp/dance.mp4"));
     draft.spec.is_draft = true;
     let done = changes(std::slice::from_ref(&draft), &[moved(&draft, JobState::Done)]);
     assert_eq!(done[0].category, Some(NotificationCategory::DraftResult));
@@ -386,7 +385,7 @@ fn tracker_remembers_while_disabled() {
 #[test]
 fn user_info_round_trips() {
     let mut running = processing();
-    running.output_file = Some(Url::parse("file:///tmp/dance.mp4").unwrap());
+    running.output_file = Some(crate::testing::file_url("/tmp/dance.mp4"));
     let notification = changes(std::slice::from_ref(&running), &[moved(&running, JobState::Done)]).remove(0);
     let info = notification.user_info();
     assert_eq!(target(&info), Some((Destination::Library, running.id)));

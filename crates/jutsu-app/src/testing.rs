@@ -292,8 +292,13 @@ pub fn absolute(path: impl AsRef<std::path::Path>) -> std::path::PathBuf {
     if path.is_absolute() {
         path.to_path_buf()
     } else {
-        std::path::Path::new("C:\\").join(path.strip_prefix("/").unwrap_or(path))
+        std::path::PathBuf::from(format!("C:{}", path.to_string_lossy().replace('/', "\\")))
     }
+}
+
+/// `path` as the system writes it: `absolute`, as text.
+pub fn native(path: &str) -> String {
+    absolute(path).to_string_lossy().into_owned()
 }
 
 /// The `file:` URL of `path`, made absolute on every system (`absolute`).

@@ -262,6 +262,8 @@ mod tests {
         set
     }
 
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn delivery_folders_are_the_ones_the_person_exported_to_newest_first() {
         let sets = [

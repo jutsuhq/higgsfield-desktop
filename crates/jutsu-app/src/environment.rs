@@ -561,7 +561,6 @@ mod tests {
     };
     use jutsu_engine::EnqueueOptions;
     use rust_decimal::Decimal;
-    use url::Url;
     use uuid::Uuid;
 
     use super::*;
@@ -631,7 +630,7 @@ mod tests {
             Mode::MotionTransfer,
             VideoModel::GENJUTSU,
             Some(SourceClip::new(
-                Url::parse("file:///tmp/clips/dance.mov").unwrap(),
+                crate::testing::file_url("/tmp/clips/dance.mov"),
                 30.0,
                 PixelSize {
                     width: 1280,

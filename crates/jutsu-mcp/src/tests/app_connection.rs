@@ -98,9 +98,15 @@ fn folder() -> tempfile::TempDir {
     tempfile::Builder::new().prefix("jm").tempdir().expect("folder")
 }
 
-/// A socket nobody listens on.
+/// A socket nobody listens on; on Windows a pipe of its own, its inbox in the folder.
 fn nowhere(folder: &tempfile::TempDir) -> AgentEndpoint {
-    AgentEndpoint::at(folder.path().join(socket::FILE_NAME))
+    let mut endpoint = AgentEndpoint::at(folder.path().join(socket::FILE_NAME));
+    if cfg!(windows) {
+        let unique = folder.path().file_name().expect("folder name").to_string_lossy();
+        endpoint.name = PathBuf::from(format!("{}jutsu-test-{unique}", socket::PIPE_NAMESPACE));
+        endpoint.folder = folder.path().to_path_buf();
+    }
+    endpoint
 }
 
 /// The app's own socket, not an override.

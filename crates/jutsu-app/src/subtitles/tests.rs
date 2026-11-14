@@ -2,7 +2,7 @@
 //! `SpeechModelsTests`. `theFileIsOpenedThroughItsBookmark` isn't ported: security-scoped bookmarks are macOS-only.
 
 use std::collections::BTreeSet;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex, PoisonError};
 use std::time::Duration;
@@ -183,7 +183,7 @@ fn source() -> MaterialReference {
 }
 
 fn request(language: &str) -> SubtitleRequest {
-    SubtitleRequest::new(source(), "/tmp/clip.mp4", language)
+    SubtitleRequest::new(source(), crate::testing::absolute("/tmp/clip.mp4"), language)
 }
 
 async fn eventually(check: impl Fn() -> bool) {
@@ -498,7 +498,7 @@ impl AgentFixture {
         let (request_id, fingerprint) = (fields.request_id.clone(), fields.fingerprint.clone());
         let target = SubtitleTarget {
             source: self.source,
-            file: PathBuf::from("/tmp/talk.mp4"),
+            file: crate::testing::absolute("/tmp/talk.mp4"),
             subtitles: None,
         };
         self.agent

@@ -760,7 +760,6 @@ mod tests {
     use jutsu_core::{
         ClosedRange, FailureReason, PixelSize, ProviderKind, RemoteJob, SourceClip, VideoModel,
     };
-    use url::Url;
     use uuid::Uuid;
 
     fn dec(text: &str) -> Decimal {
@@ -781,7 +780,7 @@ mod tests {
         length: f64,
     ) -> Job {
         let source = SourceClip::new(
-            Url::parse("file:///tmp/source.mov").unwrap(),
+            crate::testing::file_url("/tmp/source.mov"),
             30.0,
             PixelSize::new(1280, 720),
             ClosedRange::new(0.0, length),

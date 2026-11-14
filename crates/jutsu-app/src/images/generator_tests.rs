@@ -164,7 +164,7 @@ fn qwen() -> ImageModel {
 }
 
 fn input() -> LocalImage {
-    LocalImage::new(url("file:///tmp/knight.png"))
+    LocalImage::new(crate::testing::file_url("/tmp/knight.png"))
 }
 
 const LANDSCAPE: PixelSize = PixelSize {
@@ -214,7 +214,7 @@ fn upload(provider: &Arc<FakeImageProvider>) -> UploadFn {
         Box::pin(async move {
             provider
                 .upload(PreparedFile {
-                    file_url: url("file:///tmp/knight.png"),
+                    file_url: crate::testing::file_url("/tmp/knight.png"),
                     content_type: "image/png".to_owned(),
                     byte_count: 1,
                     content_hash: "h".to_owned(),
@@ -682,7 +682,9 @@ async fn a_new_connection_uploads_the_input_again_and_a_late_upload_of_the_old_o
     // An upload of the first account still out when the second one connects.
     let gate = Gate::new();
     first.script(|script| script.upload_gate = Some(gate.clone()));
-    generator.edit_form(|form| form.input_image = Some(LocalImage::new(url("file:///tmp/cape.png"))));
+    generator.edit_form(|form| {
+        form.input_image = Some(LocalImage::new(crate::testing::file_url("/tmp/cape.png")));
+    });
     let late_generator = generator.clone();
     let late_provider = first.clone();
     let late = tokio::spawn(async move {

@@ -173,11 +173,11 @@ impl CharacterSheetMaker for FakeMaker {
 }
 
 fn face() -> LocalImage {
-    LocalImage::new(url("file:///tmp/face.png"))
+    LocalImage::new(crate::testing::file_url("/tmp/face.png"))
 }
 
 fn style() -> LocalImage {
-    LocalImage::new(url("file:///tmp/style.png"))
+    LocalImage::new(crate::testing::file_url("/tmp/style.png"))
 }
 
 fn yielding() -> SleepFn {
@@ -230,7 +230,7 @@ fn upload(maker: &Arc<FakeMaker>) -> UploadFn {
         Box::pin(async move {
             maker
                 .upload(PreparedFile {
-                    file_url: url("file:///tmp/x.png"),
+                    file_url: crate::testing::file_url("/tmp/x.png"),
                     content_type: "image/png".to_owned(),
                     byte_count: 1,
                     content_hash: "x".to_owned(),
@@ -774,7 +774,7 @@ fn the_log_survives_a_relaunch() {
         CharacterSheetState::Completed {},
         Some(url("https://cdn.example.com/1.png")),
     );
-    let saved = url("file:///tmp/1.png");
+    let saved = crate::testing::file_url("/tmp/1.png");
     first.set_file(saved.clone(), "job-1");
 
     let second = CharacterSheetLog::open(Some(folder.path()));

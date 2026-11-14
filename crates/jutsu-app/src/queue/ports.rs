@@ -117,7 +117,7 @@ mod tests {
 
     #[tokio::test]
     async fn without_ffmpeg_preparing_fails_with_a_clear_message() {
-        let image = LocalImage::new(Url::parse("file:///tmp/a.png").unwrap());
+        let image = LocalImage::new(crate::testing::file_url("/tmp/a.png"));
         let error = MissingFfmpeg.prepare_image(&image).await.unwrap_err();
         assert!(error.to_string().contains("ffmpeg"));
         assert_eq!(MissingFfmpeg.image_size(&image).await, None);

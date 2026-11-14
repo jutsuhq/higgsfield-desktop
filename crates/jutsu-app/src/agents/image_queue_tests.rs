@@ -31,7 +31,7 @@ fn edit() -> jutsu_core::ImageModel {
 }
 
 fn picture(index: usize) -> LocalImage {
-    LocalImage::new(Url::parse(&format!("file:///tmp/agent-input-{index}.png")).unwrap())
+    LocalImage::new(crate::testing::file_url(format!("/tmp/agent-input-{index}.png")))
 }
 
 struct Setup {

@@ -10,7 +10,6 @@ use jutsu_core::{
     PixelSize, SourceClip, SubmitAttempt,
 };
 use rust_decimal::Decimal;
-use url::Url;
 
 use super::*;
 use crate::queue::fixture;
@@ -41,7 +40,7 @@ fn agent(state: JobState) -> Job {
 
 fn source(width: i64, height: i64) -> SourceClip {
     SourceClip::new(
-        Url::parse("file:///tmp/in.mov").unwrap(),
+        crate::testing::file_url("/tmp/in.mov"),
         5.0,
         PixelSize { width, height },
         ClosedRange::new(0.0, 5.0),
@@ -126,7 +125,7 @@ fn a_raise_still_held_says_the_job_stays_over_its_old_max_cost() {
 fn a_finished_video_says_how_to_check_it_with_frames() {
     let mut done = agent(JobState::Done);
     done.spec.source = None;
-    done.output_file = Some(Url::parse("file:///tmp/out.mp4").unwrap());
+    done.output_file = Some(crate::testing::file_url("/tmp/out.mp4"));
     let plain = AgentJobRules::check_hint(&done).unwrap();
     assert!(
         plain.contains(&format!("frames with item {}", wire_id(done.id)))
@@ -147,7 +146,7 @@ fn a_finished_video_says_how_to_check_it_with_frames() {
 #[test]
 fn a_finished_video_says_its_frame_and_when_it_is_not_the_sources() {
     let mut done = agent(JobState::Done);
-    done.output_file = Some(Url::parse("file:///tmp/out.mp4").unwrap());
+    done.output_file = Some(crate::testing::file_url("/tmp/out.mp4"));
     done.spec.source = Some(source(576, 1024));
     done.output_media = Some(OutputMedia {
         duration: 5.04,
@@ -161,7 +160,10 @@ fn a_finished_video_says_its_frame_and_when_it_is_not_the_sources() {
         (wire.width, wire.height, wire.duration),
         (Some(554), Some(740), Some(5.04))
     );
-    assert_eq!(wire.result.as_deref(), Some("/tmp/out.mp4"));
+    assert_eq!(
+        wire.result.as_deref(),
+        Some(crate::testing::native("/tmp/out.mp4").as_str())
+    );
     let note = wire.frame_note.unwrap();
     assert!(note.contains("554×740 (3:4)") && note.contains("576×1024 (9:16)"));
 

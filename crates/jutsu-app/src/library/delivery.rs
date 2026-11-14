@@ -753,7 +753,6 @@ mod tests {
     use std::collections::{HashMap, HashSet};
 
     use jutsu_core::{DeliveryFolder, DeliveryPlan, DeliveryScope, Material, MaterialVersion};
-    use url::Url;
     use uuid::Uuid;
 
     use super::*;
@@ -770,7 +769,7 @@ mod tests {
         let materials: Vec<Material> = (1..=images)
             .map(|index| {
                 let mut version = MaterialVersion::new(Uuid::new_v4(), OffsetDateTime::UNIX_EPOCH);
-                version.file_url = Some(Url::parse(&format!("file:///library/img{index}.png")).unwrap());
+                version.file_url = Some(crate::testing::file_url(format!("/library/img{index}.png")));
                 Material::new(
                     Uuid::new_v4(),
                     MaterialKind::Image,
@@ -790,7 +789,7 @@ mod tests {
 
     fn folder(path: &str) -> DeliveryFolder {
         DeliveryFolder {
-            url: Url::parse(&format!("file://{path}")).unwrap(),
+            url: crate::testing::file_url(path),
         }
     }
 

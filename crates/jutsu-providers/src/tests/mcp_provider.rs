@@ -480,7 +480,7 @@ async fn declined_submit_carries_the_server_reason() {
 async fn asset_without_media_id_is_refused() {
     let (provider, stub) = quiet_provider(provider_tools()).await;
     let inputs = RemoteInputs {
-        video: Some(RemoteAsset::new(Url::from_file_path("/in.mp4").unwrap())),
+        video: Some(RemoteAsset::new(super::support::agent_b::file_url("/in.mp4"))),
         images: Vec::new(),
         audio: None,
     };

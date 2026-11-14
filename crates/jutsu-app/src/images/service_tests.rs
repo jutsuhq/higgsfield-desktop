@@ -175,9 +175,9 @@ async fn a_drop_on_the_image_to_edit_row_takes_its_first_image() {
     assert_eq!(snapshot.input.and_then(|input| input.path), None);
     let snapshot = images.edit(ImageEdit::DropInput {
         paths: vec![
-            "/tmp/clip.mov".to_owned(),
-            "/tmp/face.png".to_owned(),
-            "/tmp/other.jpg".to_owned(),
+            crate::testing::native("/tmp/clip.mov"),
+            crate::testing::native("/tmp/face.png"),
+            crate::testing::native("/tmp/other.jpg"),
         ],
     });
     assert_eq!(

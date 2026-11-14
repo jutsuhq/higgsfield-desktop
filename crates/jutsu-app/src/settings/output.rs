@@ -239,6 +239,8 @@ mod tests {
     }
 
     /// `SettingsTests.displayPath`, without the macOS sandbox container.
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn the_home_folder_is_a_tilde() {
         let home = Path::new("/home/me");
@@ -257,6 +259,8 @@ mod tests {
         );
     }
 
+    // Unix paths: the rule is the same on Windows, with its own separators and drives.
+    #[cfg(unix)]
     #[test]
     fn the_tab_reads_the_settings_and_the_connection() {
         let layout = FileLayout::new("/tmp/data", "/home/me/Videos/Jutsu Studio");

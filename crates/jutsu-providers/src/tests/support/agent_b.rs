@@ -61,7 +61,13 @@ pub async fn quiet_provider(tools: Vec<Value>) -> (HiggsfieldMcpProvider, Stub) 
     provider(tools, |_, _| json!({})).await
 }
 
+/// The `file:` URL of `path`; the tests' Unix paths get a drive on Windows.
 pub fn file_url(path: &str) -> Url {
+    let path = if cfg!(windows) && path.starts_with('/') {
+        format!("C:{}", path.replace('/', "\\"))
+    } else {
+        path.to_owned()
+    };
     Url::from_file_path(path).unwrap()
 }
 

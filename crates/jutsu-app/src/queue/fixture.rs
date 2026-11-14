@@ -8,7 +8,6 @@ use jutsu_core::{
 };
 use rust_decimal::Decimal;
 use time::{Duration, OffsetDateTime};
-use url::Url;
 use uuid::Uuid;
 
 pub fn now() -> OffsetDateTime {
@@ -52,7 +51,7 @@ impl JobFixture {
             self.mode,
             VideoModel::GENJUTSU,
             Some(SourceClip::new(
-                Url::parse("file:///clips/dance.mov").unwrap(),
+                crate::testing::file_url("/clips/dance.mov"),
                 30.0,
                 PixelSize {
                     width: 1280,

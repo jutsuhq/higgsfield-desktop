@@ -763,7 +763,7 @@ async fn the_original_track_never_shares_the_results_id() {
 fn the_source_line_names_the_file_or_says_where_the_source_is() {
     use super::source_file_name;
     assert_eq!(
-        source_file_name(&url::Url::parse("file:///tmp/clips/rooftop%20take.mov").unwrap()),
+        source_file_name(&crate::testing::file_url("/tmp/clips/rooftop take.mov")),
         "rooftop take.mov"
     );
     assert_eq!(

@@ -14,7 +14,12 @@ use uuid::Uuid;
 
 /// A `file://` URL of `path`, as `URL(fileURLWithPath:)`.
 pub fn file_url(path: impl AsRef<Path>) -> Url {
-    Url::from_file_path(path).unwrap()
+    let path = path.as_ref();
+    if path.is_absolute() {
+        return Url::from_file_path(path).unwrap();
+    }
+    // The tests' Unix paths get a drive on Windows.
+    Url::from_file_path(format!("C:{}", path.to_string_lossy().replace('/', "\\"))).unwrap()
 }
 
 /// `Date(timeIntervalSince1970:)`.

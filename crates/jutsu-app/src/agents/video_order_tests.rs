@@ -7,7 +7,6 @@ use jutsu_core::{
     AspectRatio, Capabilities, CostUnit, JobSpec, LocalImage, Mode, ModelConstraintTable, PixelSize,
     ProviderKind, Resolution, VideoModel,
 };
-use url::Url;
 
 use super::{AgentVariants, AgentVideoOrder, OrderSource, variants};
 use crate::create::context::CreateContext;
@@ -26,7 +25,7 @@ fn base() -> CreateForm {
 
 fn video(duration: f64) -> SourceVideo {
     SourceVideo {
-        file_url: Url::parse("file:///tmp/clip.mp4").unwrap(),
+        file_url: crate::testing::file_url("/tmp/clip.mp4"),
         duration,
         pixel_size: PixelSize::new(1920, 1080),
         codec: "avc1".to_owned(),
@@ -36,7 +35,7 @@ fn video(duration: f64) -> SourceVideo {
 }
 
 fn image(index: usize) -> LocalImage {
-    LocalImage::new(Url::parse(&format!("file:///tmp/ref{index}.png")).unwrap())
+    LocalImage::new(crate::testing::file_url(format!("/tmp/ref{index}.png")))
 }
 
 fn order_with(model: Option<&str>, start: Option<f64>, end: Option<f64>, images: usize) -> AgentVideoOrder {

@@ -117,15 +117,16 @@ fn refusals_read_as_the_engine_words_them() {
 fn the_preview_shows_what_goes_in_and_what_comes_out() {
     let mut rendering = job(JobState::Processing);
     rendering.spec.references = (0..5)
-        .map(|index| {
-            jutsu_core::LocalImage::new(url::Url::parse(&format!("file:///refs/{index}.png")).unwrap())
-        })
+        .map(|index| jutsu_core::LocalImage::new(crate::testing::file_url(format!("/refs/{index}.png"))))
         .collect();
     rendering.spec.references[1] =
         jutsu_core::LocalImage::new(url::Url::parse("https://cdn.example.com/a.png").unwrap());
     let shown = preview(&rendering);
     assert!(shown.has_source);
-    assert_eq!(shown.source.as_deref(), Some("/clips/dance.mov"));
+    assert_eq!(
+        shown.source.as_deref(),
+        Some(crate::testing::native("/clips/dance.mov").as_str())
+    );
     assert_eq!(
         shown.references,
         [
@@ -139,7 +140,7 @@ fn the_preview_shows_what_goes_in_and_what_comes_out() {
     assert!((shown.aspect - 1280.0 / 720.0).abs() < 1e-9);
 
     let mut done = job(JobState::Done);
-    done.output_file = Some(url::Url::parse("file:///out/result.mp4").unwrap());
+    done.output_file = Some(crate::testing::file_url("/out/result.mp4"));
     assert_eq!(
         preview(&done).result,
         ResultTile::Done {

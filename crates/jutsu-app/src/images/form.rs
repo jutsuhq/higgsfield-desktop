@@ -543,7 +543,7 @@ mod tests {
     }
 
     fn input() -> LocalImage {
-        LocalImage::new(Url::parse("file:///tmp/knight.png").unwrap())
+        LocalImage::new(crate::testing::file_url("/tmp/knight.png"))
     }
 
     const LANDSCAPE: PixelSize = PixelSize {
