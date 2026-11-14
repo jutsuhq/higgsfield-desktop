@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { ArrowLeftRight, ChevronDown, ChevronLeft, ChevronUp, CircleX, Maximize2, ZoomIn } from "lucide-react";
-import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 
 import {
   commands,
@@ -80,7 +80,9 @@ function ImageCompareScreen({ view, isError }: { view: ImageCompareView | undefi
   };
   const pages = sides?.position != null;
 
-  useEffect(() => {
+  // A layout effect: the listener holds the sides on screen from the moment they show, so a key pressed right after a
+  // swap swaps those.
+  useLayoutEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.defaultPrevented || isEditingText() || event.ctrlKey || event.altKey || event.metaKey) return;
       if (event.key === "Escape") back();
