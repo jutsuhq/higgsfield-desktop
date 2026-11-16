@@ -125,6 +125,7 @@ pnpm bundle       # fetch ffmpeg and build the installers
 ## Related
 
 - [Jutsu Studio for Mac](https://github.com/jutsuhq/jutsu-studio): the native macOS app this one follows
+- [Jutsu for iPhone](https://github.com/jutsuhq/jutsu-studio-ios): the open-source Higgsfield app for iPhone and iPad
 - [Kawarimi](https://github.com/jutsuhq/kawarimi-local-character-swap): free local AI character swap for Windows and
   Linux, no cloud
 - [awesome-higgsfield](https://github.com/jutsuhq/awesome-higgsfield): tools, SDKs, agent skills and apps for
