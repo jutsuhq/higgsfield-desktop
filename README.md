@@ -6,7 +6,9 @@
 
 **The open-source Higgsfield desktop app for Windows and Linux. Unofficial.**
 Make video and images with Genjutsu, Seedance, Kling and Higgsfield's other models in a desktop studio, and keep
-every file on your disk.
+every file on your disk. Higgsfield has no official Windows or Linux app; install steps and prices for one clip:
+[Higgsfield Windows app](https://jutsustudio.com/blog/higgsfield-windows-app/) ·
+[Higgsfield Linux app](https://jutsustudio.com/blog/higgsfield-linux-app/).
 
 [![Download](https://img.shields.io/badge/Download-Windows%20%7C%20Linux-8b5cf6?style=for-the-badge)](https://github.com/jutsuhq/higgsfield-desktop/releases/latest)
 
